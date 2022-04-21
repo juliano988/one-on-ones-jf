@@ -1,11 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import Home from './views/home';
+import Main from './views/main';
 import Login from './views/login';
+
+export const UserContext = createContext({} as { userInfo: { _id: string, name: string, teamName: string, role: string } | null, setuserInfo: React.Dispatch<React.SetStateAction<{ _id: string, name: string, teamName: string, role: string, } | null>> });
 
 function App() {
 
   const navigate = useNavigate();
+
+  const [userInfo, setuserInfo] = useState<{ _id: string, name: string, teamName: string, role: string } | null>(null);
 
   useEffect(function () {
 
@@ -15,7 +19,7 @@ function App() {
       }).then(function (data: { isTokenValid: boolean, message: string }) {
 
         if (data.isTokenValid) {
-          navigate('/home')
+          navigate('/main')
         } else {
           localStorage.clear();
           navigate('/login')
@@ -26,10 +30,12 @@ function App() {
   }, [navigate]);
 
   return (
-    <Routes>
-      <Route path="home" element={<Home />} />
-      <Route path="login" element={<Login />} />
-    </Routes>
+    <UserContext.Provider value={{ userInfo: userInfo, setuserInfo: setuserInfo }}>
+      <Routes>
+        <Route path="main" element={<Main />} />
+        <Route path="login" element={<Login />} />
+      </Routes>
+    </UserContext.Provider>
   );
 }
 

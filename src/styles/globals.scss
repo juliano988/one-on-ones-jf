@@ -1,1 +1,12 @@
 @import "~bootstrap/scss/bootstrap";
+
+$sidebar-bg-color: whitesmoke !default;
+$sidebar-color: #686868 !default;
+$highlight-color: rgb(26, 171, 182) !default;
+$icon-bg-color: transparent !default;
+$submenu-bg-color: rgb(233, 233, 233) !default;
+@import '~react-pro-sidebar/dist/scss/styles.scss';
+
+body{
+  background-color: whitesmoke;
+}

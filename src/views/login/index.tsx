@@ -32,7 +32,7 @@ export default function Login() {
 
         if (data.token) {
           localStorage.setItem('token', data.token);
-          navigate('/home')
+          navigate('/main')
         } else {
           setpassword('');
           seterrMessage(data.message)

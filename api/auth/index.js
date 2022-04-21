@@ -1,6 +1,4 @@
 require('dotenv').config();
-var express = require('express');
-var router = express.Router();
 var passport = require('passport');
 const UserModel = require('../../db/model.js').UserModel;
 
@@ -15,8 +13,9 @@ module.exports = function (req, res, next) {
   passport.use(new JwtStrategy(opts, function (jwt_payload, done) {
 
     UserModel.findById(jwt_payload._id, null, { lean: true }, function (err, data) {
-      if (err) { return done(err, false); }
 
+      if (err) { return done(err, false); }
+      if (!data) { return done(err, false); }
       return done(null, data);
 
     })

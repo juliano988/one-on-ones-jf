@@ -12,7 +12,8 @@ app.use(auth);
 
 app.use('/api/auth/check_token', require('./auth/check_token'));
 app.use('/api/login', require('./login'));
-app.use('/api/teste', require('./teste'));
+app.use('/api/meeting', require('./meeting'));
+app.use('/api/user', require('./user'));
 
 app.listen(4000, () => {
   console.log(`Example app listening on port 4000`)
