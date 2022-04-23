@@ -1,7 +1,6 @@
 require('dotenv').config();
 var express = require('express');
 var router = express.Router();
-var passport = require('passport');
 var jwt = require('jsonwebtoken');
 
 router.get('/', (req, res) => {
