@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
   jwt.verify(token, process.env.SECRET, function (err, decoded) {
     if (err) { return res.status(500).json({ isTokenValid: false, message: 'Invalid token.' }) }
 
-    res.send({ isTokenValid: true, message: 'Token Valid.' })
+    res.send({ isTokenValid: true })
 
   });
 

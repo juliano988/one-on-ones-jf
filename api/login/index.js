@@ -21,7 +21,7 @@ router.post('/', function (req, res) {
 
       var token = jwt.sign(data, process.env.SECRET);
 
-      res.status(200).json({ token: token, message: 'Success!' });
+      res.status(200).json({ token: token });
 
     });
 

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Button, Form, Modal } from "react-bootstrap";
+import { Button, Form, Modal, Spinner } from "react-bootstrap";
 import Select from 'react-select'
 import { UserContext } from "../../../App";
 
@@ -7,7 +7,13 @@ export default function ScheduleMeetingModal(props: { showModal: boolean, setsho
 
   const userInfoContext = useContext(UserContext);
 
-  const nowFormFilter = new Date().toISOString().slice(0, 16).replace(/T.{2}/, 'T' + new Date().getHours());
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = (now.getMonth() + 1).toString().padStart(2, '0');
+  const day = now.getDate().toString().padStart(2, '0');
+  const hours = now.getHours().toString().padStart(2, '0');
+  const minutes = now.getMinutes().toString().padStart(2, '0');
+  const nowFormFilter = `${year}-${month}-${day}T${hours}:${minutes}`;
 
   const [selectedUser, setselectedUser] = useState<{ value: string, label: string } | null>(null);
   const [usersOptions, setusersOptions] = useState<Array<{ value: string, label: string }>>([]);
@@ -15,6 +21,8 @@ export default function ScheduleMeetingModal(props: { showModal: boolean, setsho
   const [meetingDate, setmeetingDate] = useState<string>(nowFormFilter);
 
   const [meetingLocal, setmeetingLocal] = useState<string>('');
+
+  const [submittingMeeting, setsubmittingMeeting] = useState<boolean>(false);
 
   useEffect(function () {
 
@@ -38,10 +46,12 @@ export default function ScheduleMeetingModal(props: { showModal: boolean, setsho
 
       })
 
-  }, []);
+  }, [userInfoContext.userInfo]);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    setsubmittingMeeting(true);
 
     const updatedMeeting = {
       place: meetingLocal,
@@ -61,11 +71,10 @@ export default function ScheduleMeetingModal(props: { showModal: boolean, setsho
 
     fetch((process.env.REACT_APP_API_DOMAIN as string) + '/api/meeting', fetchOption)
       .then(function (res) {
-        return res.json();
+        return res;
       }).then(function (data) {
-
-
-
+        setsubmittingMeeting(false);
+        props.setshowModal(false);
       })
 
   }
@@ -92,7 +101,9 @@ export default function ScheduleMeetingModal(props: { showModal: boolean, setsho
           <label>Onde?</label>
           <Form.Control className="mb-2" type="text" placeholder="Escritório Principal" value={meetingLocal} onChange={(e) => setmeetingLocal(e.target.value)} />
 
-          <Button className="w-100 mt-2" type="submit">Agendar!</Button>
+          <Button className="w-100 mt-2" type="submit" disabled={submittingMeeting ? true : false}>
+            {submittingMeeting ? <Spinner animation="border" variant="light" size="sm" /> : 'Agendar!'}
+          </Button>
 
         </Form>
 
