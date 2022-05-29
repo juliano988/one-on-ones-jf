@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
-const UserModel = require('../../../db/model.js').UserModel;
+const UserModel = require('../../db/model.js').UserModel;
 
 router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
 

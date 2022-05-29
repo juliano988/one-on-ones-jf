@@ -3,7 +3,7 @@ var express = require('express');
 var router = express.Router();
 var jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const UserModel = require('../../db/model.js').UserModel
+const UserModel = require('../db/model.js').UserModel
 
 
 router.post('/', function (req, res) {

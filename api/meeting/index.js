@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
-const UserModel = require('../../db/model.js').UserModel;
-const MeetingModel = require('../../db/model.js').MeetingModel;
+const UserModel = require('../db/model.js').UserModel;
+const MeetingModel = require('../db/model.js').MeetingModel;
 
 router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
 

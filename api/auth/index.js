@@ -1,6 +1,6 @@
 require('dotenv').config();
 var passport = require('passport');
-const UserModel = require('../../db/model.js').UserModel;
+const UserModel = require('../db/model.js').UserModel;
 
 var JwtStrategy = require('passport-jwt').Strategy,
   ExtractJwt = require('passport-jwt').ExtractJwt;
