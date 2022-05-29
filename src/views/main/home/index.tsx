@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import DataTable from "react-data-table-component";
 import { FaRegCalendarPlus } from "react-icons/fa";
-import { isJSDocReturnTag } from "typescript";
 import ScheduleMeetingModal from "../components/ScheduleMeetingModal";
 
 export default function Home() {

@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ProSidebar, Menu, MenuItem, SubMenu, SidebarHeader } from 'react-pro-sidebar';
 import { FaHome, FaHeart, FaUserNinja, FaDoorOpen } from 'react-icons/fa';
 import { useContext, useEffect, useState } from 'react';
@@ -34,6 +34,7 @@ export default function Main() {
 
       })
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function logOut() {
