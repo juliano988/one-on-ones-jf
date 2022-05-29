@@ -35,8 +35,6 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "api": "node api/index.js",
-    "dev": "react-scripts start & nodemon api/index.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
