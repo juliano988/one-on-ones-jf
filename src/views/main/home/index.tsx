@@ -8,6 +8,7 @@ import ExpandedComponent from "./components/ExpandedComponent";
 export default function Home() {
 
   const [showModal, setshowModal] = useState<boolean>(false);
+  const [forceUpdate, setforceUpdate] = useState<boolean>(false);
 
   const [formattedMeetingTable, setformatedMeetingTable] = useState<Array<{ _id: string, _id_user: Array<{ _id: string, name: string, teamName: string, role: string }>, status: string; place: string; date: string; host: string, hostTeamName: string; hostRole: string; person: string; role: string, teamName: string }>>([]);
 
@@ -51,7 +52,7 @@ export default function Home() {
 
       })
 
-  }, [showModal]);
+  }, [forceUpdate]);
 
   const columns = [
     {
@@ -88,12 +89,12 @@ export default function Home() {
           data={formattedMeetingTable}
           expandableRows
           expandOnRowClicked
-          expandableRowsComponent={({ data }) => <ExpandedComponent data={data} />}
+          expandableRowsComponent={({ data }) => <ExpandedComponent data={data} setforceUpdate={setforceUpdate} />}
         />
 
       </div>
 
-      <ScheduleMeetingModal showModal={showModal} setshowModal={setshowModal} />
+      <ScheduleMeetingModal showModal={showModal} setshowModal={setshowModal} setforceUpdate={setforceUpdate} />
 
     </>
   )

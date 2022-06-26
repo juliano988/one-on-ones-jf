@@ -3,7 +3,8 @@ import { Button, Spinner } from "react-bootstrap";
 import Swal from 'sweetalert2'
 
 export default function ExpandedComponent(props: {
-  data: { _id: string, _id_user: Array<{ _id: string, name: string, teamName: string, role: string }>, status: string; place: string; date: string; host: string; hostTeamName: string; hostRole: string; person: string; role: string, teamName: string }
+  data: { _id: string, _id_user: Array<{ _id: string, name: string, teamName: string, role: string }>, status: string; place: string; date: string; host: string; hostTeamName: string; hostRole: string; person: string; role: string, teamName: string },
+  setforceUpdate: React.Dispatch<React.SetStateAction<boolean>>
 }) {
 
   const now = new Date();
@@ -73,7 +74,7 @@ export default function ExpandedComponent(props: {
           return res;
         }).then(function (data) {
 
-          window.location.reload();
+          props.setforceUpdate(function (oldState) { return !oldState })
 
         })
 

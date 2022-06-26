@@ -3,7 +3,7 @@ import { Button, Form, Modal, Spinner } from "react-bootstrap";
 import Select from 'react-select'
 import { UserContext } from "../../../App";
 
-export default function ScheduleMeetingModal(props: { showModal: boolean, setshowModal: React.Dispatch<React.SetStateAction<boolean>> }) {
+export default function ScheduleMeetingModal(props: { showModal: boolean, setshowModal: React.Dispatch<React.SetStateAction<boolean>>, setforceUpdate: React.Dispatch<React.SetStateAction<boolean>> }) {
 
   const userInfoContext = useContext(UserContext);
 
@@ -77,6 +77,7 @@ export default function ScheduleMeetingModal(props: { showModal: boolean, setsho
       }).then(function (data) {
         setsubmittingMeeting(false);
         props.setshowModal(false);
+        props.setforceUpdate(function (oldState) { return !oldState })
       })
 
   }
