@@ -9,7 +9,7 @@ export default function Home() {
 
   const [showModal, setshowModal] = useState<boolean>(false);
 
-  const [formattedMeetingTable, setformatedMeetingTable] = useState<Array<{ _id: string, status: string; place: string; date: string; host: string, hostTeamName: string; hostRole: string; person: string; role: string, teamName: string }>>([]);
+  const [formattedMeetingTable, setformatedMeetingTable] = useState<Array<{ _id: string, _id_user: Array<{ _id: string, name: string, teamName: string, role: string }>, status: string; place: string; date: string; host: string, hostTeamName: string; hostRole: string; person: string; role: string, teamName: string }>>([]);
 
   useEffect(function () {
 
@@ -26,12 +26,13 @@ export default function Home() {
         return res.json();
       }).then(function (data: Array<{ _id: string, date: string, done: boolean, place: string, _id_user: Array<{ _id: string, name: string, teamName: string, role: string }> }>) {
 
-        const tempFormattedMeetingTable: Array<{ _id: string, status: string; place: string; date: string; host: string; hostTeamName: string; hostRole: string; person: string; role: string, teamName: string }> = [];
+        const tempFormattedMeetingTable: Array<{ _id: string, _id_user: Array<{ _id: string, name: string, teamName: string, role: string }>, status: string; place: string; date: string; host: string; hostTeamName: string; hostRole: string; person: string; role: string, teamName: string }> = [];
 
         data.forEach(function (meeting) {
 
           const updatedFormattedMeetingTable = {
             _id: meeting._id,
+            _id_user: meeting._id_user,
             status: meeting.done ? '🟢' : !meeting.done && new Date().getTime() >= new Date(meeting.date).getTime() ? '🔴' : '🟠',
             place: meeting.place,
             date: new Date(meeting.date).toLocaleString(),

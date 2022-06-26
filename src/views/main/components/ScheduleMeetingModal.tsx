@@ -37,9 +37,11 @@ export default function ScheduleMeetingModal(props: { showModal: boolean, setsho
     fetch((process.env.REACT_APP_API_DOMAIN as string) + '/api/user/all', fetchOption)
       .then(function (res) {
         return res.json();
-      }).then(function (data: { users: Array<{ name: string, teamName: string, _id: string }>, message: string }) {
+      }).then(function (data: { users: Array<{ _id: string, name: string, role: "leader" | "worker" | "administrator", teamName: string }>, message: string }) {
 
-        const formattedUsersOptions = data.users.map(function (user) { return { value: user._id, label: user.name + ' • ' + user.teamName } })
+        const formattedUsersOptions = data.users.map(function (user) {
+          return { value: user._id, label: user.name + ' • ' + user.teamName + ' • ' + (user.role === "leader" ? "Líder" : user.role === "worker" ? "Liderado" : "Administrador") }
+        })
           .filter(function (userOption) { return userOption.value !== userInfoContext.userInfo?._id })
 
         setusersOptions(formattedUsersOptions);
