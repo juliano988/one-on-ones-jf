@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import DataTable from "react-data-table-component";
 import { FaRegCalendarPlus } from "react-icons/fa";
 import ScheduleMeetingModal from "../components/ScheduleMeetingModal";
@@ -9,6 +9,8 @@ export default function Home() {
 
   const [showModal, setshowModal] = useState<boolean>(false);
   const [forceUpdate, setforceUpdate] = useState<boolean>(false);
+
+  const [showAllMeeting, setshowAllMeeting] = useState<boolean>(false);
 
   const [formattedMeetingTable, setformatedMeetingTable] = useState<Array<{ _id: string, _id_user: Array<{ _id: string, name: string, teamName: string, role: string }>, status: string; place: string; date: string; host: string, hostTeamName: string; hostRole: string; person: string; role: string, teamName: string }>>([]);
 
@@ -22,7 +24,7 @@ export default function Home() {
       method: 'GET',
     }
 
-    fetch((process.env.REACT_APP_API_DOMAIN as string) + '/api/meeting', fetchOption)
+    fetch((process.env.REACT_APP_API_DOMAIN as string) + '/api/meeting' + (showAllMeeting ? '/all' : ''), fetchOption)
       .then(function (res) {
         return res.json();
       }).then(function (data: Array<{ _id: string, date: string, done: boolean, place: string, _id_user: Array<{ _id: string, name: string, teamName: string, role: string }> }>) {
@@ -52,7 +54,7 @@ export default function Home() {
 
       })
 
-  }, [forceUpdate]);
+  }, [forceUpdate, showAllMeeting]);
 
   const columns = [
     {
@@ -80,7 +82,14 @@ export default function Home() {
   return (
     <>
       <div className="m-2">
-        <div className="d-flex justify-content-end mb-2">
+        <div className="d-flex justify-content-end align-items-center mb-2">
+          <Form.Check
+            className="me-3"
+            type="switch"
+            label="Ver todas as reuniões"
+            checked={showAllMeeting}
+            onChange={() => setshowAllMeeting(!showAllMeeting)}
+          />
           <Button onClick={() => setshowModal(true)}><FaRegCalendarPlus /> Agendar Reunião</Button>
         </div>
 
