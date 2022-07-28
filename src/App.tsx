@@ -2,6 +2,7 @@ import React, { createContext, useEffect, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import Main from './views/main';
 import Login from './views/login';
+import Register from './views/register';
 
 export const UserContext = createContext({} as { userInfo: { _id: string, name: string, teamName: string, role: string } | null, setuserInfo: React.Dispatch<React.SetStateAction<{ _id: string, name: string, teamName: string, role: string, } | null>> });
 
@@ -19,10 +20,13 @@ function App() {
       }).then(function (data: { isTokenValid: boolean, message: string }) {
 
         if (data.isTokenValid) {
-          navigate('/main')
-        } else {
+          navigate('/main');
+        } else if (/\/register$/.test(window.location.href)){
+          navigate('/register');
+        }
+         else {
           localStorage.clear();
-          navigate('/login')
+          navigate('/login');
         }
 
       })
@@ -34,6 +38,7 @@ function App() {
       <Routes>
         <Route path="main" element={<Main />} />
         <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
       </Routes>
     </UserContext.Provider>
   );
