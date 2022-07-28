@@ -1,9 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import { ProSidebar, Menu, MenuItem, SubMenu, SidebarHeader } from 'react-pro-sidebar';
-import { FaHome, FaHeart, FaUserNinja, FaDoorOpen } from 'react-icons/fa';
+import { FaHome, FaHeart, FaUserNinja, FaDoorOpen, FaChartPie } from 'react-icons/fa';
 import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../App';
 import Home from './home';
+import Statistic from './statistic';
 
 export default function Main() {
 
@@ -34,7 +35,7 @@ export default function Main() {
 
       })
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function logOut() {
@@ -50,7 +51,9 @@ export default function Main() {
       case 'home':
         setselectedView(<Home />)
         break;
-
+      case 'statistic':
+        setselectedView(<Statistic />)
+        break;
       default:
         break;
     }
@@ -72,6 +75,7 @@ export default function Main() {
             <MenuItem icon={<FaDoorOpen />} onClick={() => logOut()}> Sair</MenuItem>
           </SubMenu>
           <MenuItem icon={<FaHome />} onClick={() => handleMainNavigation('home')}>Home</MenuItem>
+          <MenuItem icon={<FaChartPie />} onClick={() => handleMainNavigation('statistic')}>Estatísticas</MenuItem>
           <SubMenu title="Components" icon={<FaHeart />}>
             <MenuItem>Component 1</MenuItem>
             <MenuItem>Component 2</MenuItem>
@@ -79,7 +83,7 @@ export default function Main() {
         </Menu>
       </ProSidebar>
 
-      <div className='h-100 w-100'>
+      <div className='h-100 w-100 m-2'>
         {selectedView}
       </div>
 
