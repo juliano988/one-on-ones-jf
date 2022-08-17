@@ -1,10 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import { ProSidebar, Menu, MenuItem, SubMenu, SidebarHeader } from 'react-pro-sidebar';
-import { FaHome, FaHeart, FaUserNinja, FaDoorOpen, FaChartPie } from 'react-icons/fa';
+import { FaHome, FaUserNinja, FaDoorOpen, FaChartPie, FaToolbox } from 'react-icons/fa';
 import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../App';
 import Home from './home';
 import Statistic from './statistic';
+import Configurations from './configurations';
 
 export default function Main() {
 
@@ -54,6 +55,9 @@ export default function Main() {
       case 'statistic':
         setselectedView(<Statistic />)
         break;
+      case 'configurations':
+        setselectedView(<Configurations />)
+        break;
       default:
         break;
     }
@@ -72,14 +76,11 @@ export default function Main() {
         </SidebarHeader>
         <Menu iconShape="square">
           <SubMenu title={userInfo?.name} icon={<FaUserNinja />}>
+            {userInfo?.role === "administrator" ? <MenuItem icon={<FaToolbox />} onClick={() => handleMainNavigation('configurations')}> Configurações</MenuItem> : <></>}
             <MenuItem icon={<FaDoorOpen />} onClick={() => logOut()}> Sair</MenuItem>
           </SubMenu>
           <MenuItem icon={<FaHome />} onClick={() => handleMainNavigation('home')}>Home</MenuItem>
           <MenuItem icon={<FaChartPie />} onClick={() => handleMainNavigation('statistic')}>Estatísticas</MenuItem>
-          <SubMenu title="Components" icon={<FaHeart />}>
-            <MenuItem>Component 1</MenuItem>
-            <MenuItem>Component 2</MenuItem>
-          </SubMenu>
         </Menu>
       </ProSidebar>
 

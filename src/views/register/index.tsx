@@ -82,7 +82,7 @@ export default function Register() {
             <Form.Label>Permissão:</Form.Label>
             <Form.Select value={role} onChange={(e) => setrole(e.target.value)} required>
               <option value="">Selecione uma opção</option>
-              <option value="admin">Administrador</option>
+              <option value="administrator">Administrador</option>
               <option value="leader">Líder</option>
               <option value="worker">Liderado</option>
             </Form.Select>
