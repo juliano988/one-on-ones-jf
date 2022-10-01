@@ -3,9 +3,9 @@ import { Button, Form, Modal } from "react-bootstrap";
 
 export default function UpdateUserModal(props: { showUpdateUserModal: boolean, setshowUpdateUserModal: React.Dispatch<React.SetStateAction<boolean>>, selectedUser: any, setforceUpdateTable: React.Dispatch<React.SetStateAction<boolean>> }) {
 
-  const [name, setname] = useState<string>('');
-  const [role, setrole] = useState<string>('');
-  const [teamName, setteamName] = useState<string>('');
+  const [name, setname] = useState<string>(props.selectedUser?.name);
+  const [role, setrole] = useState<string>(props.selectedUser?.role);
+  const [teamName, setteamName] = useState<string>(props.selectedUser?.teamName);
 
   useEffect(function () {
     console.log(props.selectedUser)
