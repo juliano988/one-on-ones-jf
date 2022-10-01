@@ -2,10 +2,16 @@ import { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 import DataTable from "react-data-table-component";
 import { FaTrash, FaUserEdit } from "react-icons/fa";
+import UpdateUserModal from "./components/UpdateUserModal";
 
 export default function Configurations() {
 
   const [formattedMeetingTable, setformatedMeetingTable] = useState<Array<{ _id: string, name: string, role: "Líder" | "Funcionário" | "Administrador", teamName: string, edit: any, delete: any }>>([]);
+
+  const [showUpdateUserModal, setshowUpdateUserModal] = useState<boolean>(false);
+  const [selectedUser, setselectedUser] = useState<{ _id: string; name: string; role: "leader" | "worker" | "administrator"; teamName: string; } | {}>({})
+
+  const [forceUpdateTable, setforceUpdateTable] = useState<boolean>(false)
 
   useEffect(function () {
 
@@ -31,7 +37,7 @@ export default function Configurations() {
             name: user.name,
             role: (user.role === "leader" ? "Líder" : user.role === "worker" ? "Funcionário" : "Administrador") as "Líder" | "Funcionário" | "Administrador",
             teamName: user.teamName,
-            edit: <span><FaUserEdit /></span>,
+            edit: <span onClick={() => { setselectedUser(user); setshowUpdateUserModal(true) }} ><FaUserEdit /></span>,
             delete: <span><FaTrash /></span>
           }
           tempFormattedUserTable.push(updatedFormattedUserTable);
@@ -42,7 +48,7 @@ export default function Configurations() {
 
       })
 
-  }, []);
+  }, [forceUpdateTable]);
 
   const columns = [
     {
@@ -78,6 +84,9 @@ export default function Configurations() {
           />
         </Card.Body>
       </Card>
+
+      <UpdateUserModal showUpdateUserModal={showUpdateUserModal} setshowUpdateUserModal={setshowUpdateUserModal} selectedUser={selectedUser} setforceUpdateTable={setforceUpdateTable}/>
+
     </>
   )
 }
