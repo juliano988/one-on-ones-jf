@@ -40,6 +40,7 @@ export default function Main(props: { pathName: string }) {
         break;
     }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(function () {
