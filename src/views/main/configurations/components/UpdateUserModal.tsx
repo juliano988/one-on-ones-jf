@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 
 export default function UpdateUserModal(props: { showUpdateUserModal: boolean, setshowUpdateUserModal: React.Dispatch<React.SetStateAction<boolean>>, selectedUser: any, setforceUpdateTable: React.Dispatch<React.SetStateAction<boolean>> }) {
