@@ -1,17 +1,20 @@
 import { useNavigate } from 'react-router-dom';
 import { ProSidebar, Menu, MenuItem, SubMenu, SidebarHeader } from 'react-pro-sidebar';
-import { FaHome, FaUserNinja, FaDoorOpen, FaChartPie, FaToolbox } from 'react-icons/fa';
+import { FaHome, FaUserNinja, FaDoorOpen, FaChartPie, FaToolbox, FaAlignLeft } from 'react-icons/fa';
 import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../App';
 import Home from './home';
 import Statistic from './statistic';
 import Configurations from './configurations';
+import { Button } from 'react-bootstrap';
 
 export default function Main() {
 
   const userInfoContext = useContext(UserContext);
 
   const navigate = useNavigate();
+
+  const [toggleSideBar, settoggleSideBar] = useState(true)
 
   const [userInfo, setuserInfo] = useState<{ _id: string, name: string, teamName: string, role: string } | null>(null);
   const [selectedView, setselectedView] = useState(<Home />)
@@ -68,7 +71,7 @@ export default function Main() {
 
   return (
     <div className='d-flex'>
-      <ProSidebar className='vh-100'>
+      <ProSidebar className='vh-100' breakPoint="lg" toggled={toggleSideBar} onToggle={(val) => settoggleSideBar(val)}>
         <SidebarHeader>
           <div className='d-flex p-1'>
             <img className='m-auto' src='images/dti_logo.png' alt='DTI logo'></img>
@@ -85,6 +88,7 @@ export default function Main() {
       </ProSidebar>
 
       <div className='h-100 w-100 m-2'>
+        <div>{!toggleSideBar ? <Button onClick={() => settoggleSideBar(true)}><FaAlignLeft /></Button> : <></>}</div>
         {selectedView}
       </div>
 
