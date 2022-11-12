@@ -12,6 +12,14 @@ function App() {
 
   const [userInfo, setuserInfo] = useState<{ _id: string, name: string, teamName: string, role: string } | null>(null);
 
+  const [pathName, setpathName] = useState<string>('')
+
+  useEffect(function () {
+
+    setpathName(window.location.pathname);
+
+  }, [])
+
   useEffect(function () {
 
     fetch((process.env.REACT_APP_API_DOMAIN as string) + '/api/auth/check_token?token=' + localStorage.getItem('token'))
@@ -21,22 +29,23 @@ function App() {
 
         if (data.isTokenValid) {
           navigate('/main');
-        } else if (/\/register$/.test(window.location.href)){
+        } else if (/\/register$/.test(window.location.href)) {
           navigate('/register');
         }
-         else {
+        else {
           localStorage.clear();
           navigate('/login');
         }
 
       })
 
-  }, [navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <UserContext.Provider value={{ userInfo: userInfo, setuserInfo: setuserInfo }}>
       <Routes>
-        <Route path="main" element={<Main />} />
+        <Route path="main" element={<Main pathName={pathName} />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
       </Routes>

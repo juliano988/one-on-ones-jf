@@ -8,7 +8,7 @@ import Statistic from './statistic';
 import Configurations from './configurations';
 import { Button } from 'react-bootstrap';
 
-export default function Main() {
+export default function Main(props: { pathName: string }) {
 
   const userInfoContext = useContext(UserContext);
 
@@ -18,6 +18,29 @@ export default function Main() {
 
   const [userInfo, setuserInfo] = useState<{ _id: string, name: string, teamName: string, role: string } | null>(null);
   const [selectedView, setselectedView] = useState(<Home />)
+
+  useEffect(function () {
+
+    switch (props.pathName) {
+      case '/main/home':
+        window.history.pushState("", "", window.location.origin + props.pathName);
+        setselectedView(<Home />);
+        break;
+      case '/main/statistic':
+        window.history.pushState("", "", window.location.origin + props.pathName);
+        setselectedView(<Statistic />);
+        break;
+      case '/main/configurations':
+        window.history.pushState("", "", window.location.origin + props.pathName);
+        setselectedView(<Configurations />);
+        break;
+      default:
+        window.history.pushState("", "", window.location.origin + '/main/home');
+        setselectedView(<Home />);
+        break;
+    }
+
+  }, []);
 
   useEffect(function () {
 
@@ -74,7 +97,7 @@ export default function Main() {
       <ProSidebar className='vh-100' breakPoint="lg" toggled={toggleSideBar} onToggle={(val) => settoggleSideBar(val)}>
         <SidebarHeader>
           <div className='d-flex p-1'>
-            <img className='m-auto' src='images/dti_logo.png' alt='DTI logo'></img>
+            <img className='m-auto' src='/images/dti_logo.png' alt='DTI logo'></img>
           </div>
         </SidebarHeader>
         <Menu iconShape="square">
@@ -88,7 +111,7 @@ export default function Main() {
       </ProSidebar>
 
       <div className='h-100 w-100 m-2'>
-        <div>{!toggleSideBar ? <Button onClick={() => settoggleSideBar(true)}><FaAlignLeft /></Button> : <></>}</div>
+        <div className='mb-2'>{!toggleSideBar ? <Button onClick={() => settoggleSideBar(true)}><FaAlignLeft /></Button> : <></>}</div>
         {selectedView}
       </div>
 
