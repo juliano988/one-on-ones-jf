@@ -57,11 +57,11 @@ export default function Configurations() {
     },
     {
       name: 'Setor',
-      selector: (row: { name: string; role: string; teamName: string; edit: any; delete: any; }) => row.role,
+      selector: (row: { name: string; role: string; teamName: string; edit: any; delete: any; }) => row.teamName,
     },
     {
       name: 'Perfil',
-      selector: (row: { name: string; role: string; teamName: string; edit: any; delete: any; }) => row.teamName,
+      selector: (row: { name: string; role: string; teamName: string; edit: any; delete: any; }) => row.role,
     },
     {
       name: 'Editar',

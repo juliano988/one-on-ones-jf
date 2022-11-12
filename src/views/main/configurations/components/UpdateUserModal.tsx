@@ -7,10 +7,6 @@ export default function UpdateUserModal(props: { showUpdateUserModal: boolean, s
   const [role, setrole] = useState<string>(props.selectedUser?.role);
   const [teamName, setteamName] = useState<string>(props.selectedUser?.teamName);
 
-  useEffect(function () {
-    console.log(props.selectedUser)
-  })
-
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
