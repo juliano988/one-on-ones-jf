@@ -28,7 +28,22 @@ function App() {
       }).then(function (data: { isTokenValid: boolean, message: string }) {
 
         if (data.isTokenValid) {
-          navigate('/main');
+
+          switch (window.location.pathname) {
+            case '/main/home':
+              navigate('/main/home');
+              break;
+            case '/main/statistic':
+              navigate('/main/statistic');
+              break;
+            case '/main/configurations':
+              navigate('/main/configurations');
+              break;
+            default:
+              navigate('/main/home');
+              break;
+          }
+
         } else if (/\/register$/.test(window.location.href)) {
           navigate('/register');
         }
@@ -45,6 +60,9 @@ function App() {
   return (
     <UserContext.Provider value={{ userInfo: userInfo, setuserInfo: setuserInfo }}>
       <Routes>
+        <Route path="main/home" element={<Main pathName={pathName} />} />
+        <Route path="main/statistic" element={<Main pathName={pathName} />} />
+        <Route path="main/configurations" element={<Main pathName={pathName} />} />
         <Route path="main" element={<Main pathName={pathName} />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
