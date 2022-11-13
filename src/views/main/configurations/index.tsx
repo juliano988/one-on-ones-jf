@@ -3,6 +3,7 @@ import { Card } from "react-bootstrap";
 import DataTable from "react-data-table-component";
 import { FaTrash, FaUserEdit } from "react-icons/fa";
 import UpdateUserModal from "./components/UpdateUserModal";
+import Swal from 'sweetalert2';
 
 export default function Configurations() {
 
@@ -38,7 +39,7 @@ export default function Configurations() {
             role: (user.role === "leader" ? "Líder" : user.role === "worker" ? "Funcionário" : "Administrador") as "Líder" | "Funcionário" | "Administrador",
             teamName: user.teamName,
             edit: <span onClick={() => { setselectedUser(user); setshowUpdateUserModal(true) }} ><FaUserEdit /></span>,
-            delete: <span><FaTrash /></span>
+            delete: <span onClick={() => { handleDeleteClick(user) }}><FaTrash /></span>
           }
           tempFormattedUserTable.push(updatedFormattedUserTable);
 
@@ -49,6 +50,46 @@ export default function Configurations() {
       })
 
   }, [forceUpdateTable]);
+
+  function handleDeleteClick(user: { _id: string; name: string; role: "leader" | "worker" | "administrator"; teamName: string; }) {
+
+    Swal.fire({
+      title: 'Tem certeza?',
+      html:
+        `<p>Gostaria de excluir o usuário <b>${user.name}</b>?</p>`,
+      focusConfirm: false,
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim',
+      cancelButtonText: 'Não',
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        const deletedUser = {
+          _id: user._id
+        }
+
+        const fetchOption: RequestInit = {
+          headers: new Headers({
+            'Content-Type': 'application/json; charset=utf-8',
+            'Authorization': 'bearer ' + localStorage.getItem('token')
+          }),
+          method: 'DELETE',
+          body: JSON.stringify(deletedUser)
+        }
+
+        fetch((process.env.REACT_APP_API_DOMAIN as string) + '/api/user', fetchOption)
+
+      }
+    }).finally(function () {
+
+      setforceUpdateTable(!forceUpdateTable);
+
+    })
+
+  }
 
   const columns = [
     {
@@ -85,7 +126,7 @@ export default function Configurations() {
         </Card.Body>
       </Card>
 
-      <UpdateUserModal showUpdateUserModal={showUpdateUserModal} setshowUpdateUserModal={setshowUpdateUserModal} selectedUser={selectedUser} setforceUpdateTable={setforceUpdateTable}/>
+      <UpdateUserModal showUpdateUserModal={showUpdateUserModal} setshowUpdateUserModal={setshowUpdateUserModal} selectedUser={selectedUser} setforceUpdateTable={setforceUpdateTable} />
 
     </>
   )
