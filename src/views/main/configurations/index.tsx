@@ -49,6 +49,7 @@ export default function Configurations() {
 
       })
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [forceUpdateTable]);
 
   function handleDeleteClick(user: { _id: string; name: string; role: "leader" | "worker" | "administrator"; teamName: string; }) {
